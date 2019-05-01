@@ -3,22 +3,22 @@ all:
 include Makefile.env
 
 up:
-	git push -u origin master
+	nice -n 19 git push -u origin master
 e:
 	vim Makefile.env
 m:
 	vim Makefile
 gs:
-	git status
+	nice -n 19 git status
 gc:
-	git commit -a
+	nice -n 19 git commit -a
 	
 
 gd :
-	git diff
+	nice -n 19 git diff
 
 ga :
-	git add .
+	nice -n 19 git add .
 
 rg:regen
 regen:
@@ -27,11 +27,13 @@ regenX:
 	rm -fr public/*
 	cp ../CNAME public/
 	[ -f public/CNAME ] || ( echo ; echo "why no CNAME ? exit" ; echo ; exit 32 )
-	hugo
+	nice -n 19 hugo
 
 s : server
 server:
-	hugo server
+	[ -f config.toml ] && make serverX || make serverX -C scripts.Hugo 
+serverX:
+	nice -n 19 hugo server
 
 # hddps://themes.gohugo.io/
 # hddps://gohugo.io/themes/
